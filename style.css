@@ -1,0 +1,139 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main container */
+main {
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h2 {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Input section */
+section div {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Input */
+input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #b89b72;
+    box-shadow: 0 0 5px rgba(184, 155, 114, 0.3);
+}
+
+/* Add Button */
+#addBtn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background: #b89b72;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#addBtn:hover {
+    background: #a7895f;
+}
+
+/* Task List */
+ul {
+    list-style: none;
+}
+
+/* Each Task */
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+    border: 1px solid #eee;
+}
+
+/* Task text */
+li span {
+    flex: 1;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Buttons inside task */
+li button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    transition: 0.2s;
+}
+
+/* Complete button */
+li button:first-of-type {
+    color: #4caf50;
+}
+
+li button:first-of-type:hover {
+    transform: scale(1.2);
+}
+
+/* Delete button */
+li button:last-of-type {
+    color: #e53935;
+}
+
+li button:last-of-type:hover {
+    transform: scale(1.2);
+}
+
+/* Completed task */
+.completed span {
+    text-decoration: line-through;
+    color: #999;
+}
+
+/* Hover effect */
+li:hover {
+    background: #f1f1f1;
+}
