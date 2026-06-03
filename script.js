@@ -3,6 +3,10 @@ const taskButton = document.getElementById("addBtn");
 const itemsList = document.getElementById("itemsList");
 
 
+//states
+
+const tasks = [];
+
 // Enter key support
 
 taskName.addEventListener("keydown", function(e) {
