@@ -49,17 +49,17 @@ body {
 /* Typography */
 
 h1 {
-    font-size: 2rem;
+    font-size: var(--space-xl);
     font-weight: 700;
 }
 
 h2 {
-    font-size: 1.25rem;
+    font-size: var(--space-lg);
     font-weight: 600;
 }
 
 h3 {
-    font-size: 1rem;
+    font-size: var(--space-md);
     font-weight: 600;
 }
 
@@ -197,6 +197,15 @@ form {
     gap: var(--space-lg);
 }
 
+/* completed task */
+
+.completed-title {
+    text-decoration:line-through;
+}
+
+.completed-card {
+    opacity: 0.6;
+}
 
 /* input and select */
 
@@ -227,6 +236,10 @@ button {
     border: none;
     border-radius: var(--radius);
     padding: var(--space-sm) var(--space-md);
+}
+
+#themeButton {
+    background: var(--surface);
 }
 
 #addTaskBtn {
