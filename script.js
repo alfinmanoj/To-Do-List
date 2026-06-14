@@ -1,3 +1,5 @@
+//DOM Selections
+
 const taskForm = document.getElementById("taskForm");
 const title = document.getElementById("taskInput");
 const category = document.getElementById("categorySelect");
@@ -8,77 +10,19 @@ const dueDate = document.getElementById("dueDate");
 const taskContainer = document.getElementById("taskContainer");
 const emptyState = document.querySelector(".empty-state");
 
+const totalTask = document.getElementById("totalTasks");
+const completedTask = document.getElementById("completedTasks");
+const pendingTask = document.getElementById("pendingTasks");
+
 
 //states
 
 let tasks = [];
 
- // Add Task
-
-taskForm.addEventListener("submit", (e) => {
-
-    e.preventDefault();
-
-    const cleanedTitle = title.value.trim();
-
-    if (cleanedTitle === "") {
-        return
-    }
-    
-    const taskObj = {
-        id: Date.now(),
-        title: cleanedTitle,
-        category: category.value || "No category",
-        priority: priority.value || "No priority",
-        dueDate: dueDate.value || "No due date",
-        completed: false
-    }
-
-    tasks.push(taskObj);
-
-    //reset the form 
-    taskForm.reset();
-
-    renderTasks();
-
-
-});
-
-//complete task
-taskContainer.addEventListener("change", (e)=>{
-
-    if(!e.target.classList.contains("task-check")) {
-        return;
-    }
-    
-    const taskId = Number(e.target.getAttribute("data-id"));
-
-    const particularTask = tasks.find((element)=> element.id === taskId);
-
-    particularTask.completed = e.target.checked;
-
-    renderTasks();
-
-});
-
-
-//delete task
-taskContainer.addEventListener("click", (e) => {
-    
-    if(!e.target.classList.contains("delete-btn")) {
-        return;
-    }
-
-    const taskId = Number(e.target.getAttribute("data-id"));
-
-    tasks = tasks.filter((element)=> element.id !== taskId);
-
-     renderTasks();
-
-});
-
 
 // Functions
+
+// rendering function - render task card
 
 function renderTasks() {
 
@@ -91,7 +35,7 @@ function renderTasks() {
     }
 
    
-    for(let item of tasks) {
+    for (let item of tasks) {
 
         const taskCard = document.createElement("div");
         taskCard.classList.add("task-card");
@@ -141,7 +85,7 @@ function renderTasks() {
         taskDate.textContent = `Due Date: ${item.dueDate}`;
 
 
-        taskMeta.append(taskCategory,taskPriority,taskDate);
+        taskMeta.append(taskCategory, taskPriority, taskDate);
         taskDetails.append(taskTitle, taskMeta);
         taskInfo.append(checkBoxInput, taskDetails);
         
@@ -165,10 +109,98 @@ function renderTasks() {
 
 
         taskCard.append(taskInfo, taskActions);
-        taskContainer.appendChild(taskCard);   
-
+        taskContainer.appendChild(taskCard);
+        
     }
+    updateStats();
 
 }
+
+// Statistics Functions - update states card
+
+function updateStats() {
+
+    totalTask.textContent = tasks.length;
+
+    completedTask.textContent = tasks.filter((item)=> item.completed).length;
+
+    pendingTask.textContent = tasks.filter((item)=> !item.completed).length;
+}
+
+// initial render
 renderTasks();
+
+
+// events
+
+ // Add Task
+
+taskForm.addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    const cleanedTitle = title.value.trim();
+
+    if (cleanedTitle === "") {
+        return
+    }
+    
+    const taskObj = {
+        id: Date.now(),
+        title: cleanedTitle,
+        category: category.value || "No category",
+        priority: priority.value || "No priority",
+        dueDate: dueDate.value || "No due date",
+        completed: false
+    }
+
+    tasks.push(taskObj);
+
+    //reset the form 
+    taskForm.reset();
+
+    renderTasks();
+
+
+});
+
+
+//complete task
+
+taskContainer.addEventListener("change", (e)=>{
+
+    if(!e.target.classList.contains("task-check")) {
+        return;
+    }
+    
+    const taskId = Number(e.target.getAttribute("data-id"));
+
+    const particularTask = tasks.find((element)=> element.id === taskId);
+
+    particularTask.completed = e.target.checked;
+
+    renderTasks();
+
+});
+
+
+//delete task
+
+taskContainer.addEventListener("click", (e) => {
+    if(!e.target.classList.contains("delete-btn")) {
+        return;
+    }
+
+    const taskId = Number(e.target.getAttribute("data-id"));
+
+    tasks = tasks.filter((element)=> element.id !== taskId);
+
+
+     renderTasks();
+     
+
+});
+
+
+
 
