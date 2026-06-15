@@ -113,7 +113,6 @@ function renderTasks() {
         
     }
     updateStats();
-
 }
 
 // Statistics Functions - update states card
@@ -127,8 +126,29 @@ function updateStats() {
     pendingTask.textContent = tasks.filter((item)=> !item.completed).length;
 }
 
-// initial render
-renderTasks();
+
+// save tasks to local storage
+
+function saveTasks() {
+
+    const jsonStringArr =  JSON.stringify(tasks);
+    localStorage.setItem("tasks", jsonStringArr);
+}
+
+// load task from local Storage
+
+function loadTasks() {
+
+    const storedTasks = localStorage.getItem("tasks");
+    
+    if (storedTasks) {
+        tasks = JSON.parse(storedTasks);
+    }
+
+    renderTasks();
+}
+
+loadTasks();
 
 
 // events
@@ -156,12 +176,13 @@ taskForm.addEventListener("submit", (e) => {
 
     tasks.push(taskObj);
 
+    saveTasks();
+
     //reset the form 
     taskForm.reset();
 
     renderTasks();
-
-
+    
 });
 
 
@@ -177,7 +198,10 @@ taskContainer.addEventListener("change", (e)=>{
 
     const particularTask = tasks.find((element)=> element.id === taskId);
 
+    
     particularTask.completed = e.target.checked;
+
+    saveTasks();
 
     renderTasks();
 
@@ -195,11 +219,15 @@ taskContainer.addEventListener("click", (e) => {
 
     tasks = tasks.filter((element)=> element.id !== taskId);
 
+    saveTasks();
 
-     renderTasks();
-     
+
+    renderTasks();
 
 });
+
+
+
 
 
 
