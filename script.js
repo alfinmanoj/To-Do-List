@@ -19,6 +19,8 @@ const pendingTask = document.getElementById("pendingTasks");
 
 let tasks = [];
 
+let editingTaskId = null;
+
 
 // Functions
 
@@ -95,6 +97,7 @@ function renderTasks() {
 
 
         const editBtn = document.createElement("button");
+        editBtn.setAttribute("data-id", item.id);
         editBtn.classList.add("edit-btn");
         editBtn.textContent = "Edit";
 
@@ -153,7 +156,7 @@ loadTasks();
 
 // events
 
- // Add Task
+ // Add Task  form submit
 
 taskForm.addEventListener("submit", (e) => {
 
@@ -164,18 +167,30 @@ taskForm.addEventListener("submit", (e) => {
     if (cleanedTitle === "") {
         return
     }
-    
-    const taskObj = {
-        id: Date.now(),
-        title: cleanedTitle,
-        category: category.value || "No category",
-        priority: priority.value || "No priority",
-        dueDate: dueDate.value || "No due date",
-        completed: false
+
+    if (editingTaskId !== null) {
+        const particularTask = tasks.find((element) => element.id === editingTaskId);
+
+        particularTask.title = cleanedTitle;
+        particularTask.category = category.value || "No category";
+        particularTask.priority = priority.value || "No priority";
+        particularTask.dueDate = dueDate.value || "No due date";
+
+        editingTaskId = null;
+    }else {
+
+        const taskObj = {
+            id: Date.now(),
+            title: cleanedTitle,
+            category: category.value || "No category",
+            priority: priority.value || "No priority",
+            dueDate: dueDate.value || "No due date",
+            completed: false
+        }
+
+         tasks.push(taskObj);
     }
-
-    tasks.push(taskObj);
-
+   
     saveTasks();
 
     //reset the form 
@@ -208,6 +223,29 @@ taskContainer.addEventListener("change", (e)=>{
 });
 
 
+
+//edit task
+
+taskContainer.addEventListener("click", (e) => {
+
+    if (!e.target.classList.contains("edit-btn")) {
+        return;
+    }
+
+    const taskId = Number(e.target.getAttribute("data-id"));
+
+    const particularTask = tasks.find((element)=> element.id === taskId);
+
+    title.value = particularTask.title;
+    category.value = particularTask.category;
+    priority.value = particularTask.priority;
+    dueDate.value = particularTask.dueDate;
+
+    editingTaskId = taskId;
+
+});
+
+
 //delete task
 
 taskContainer.addEventListener("click", (e) => {
@@ -220,7 +258,6 @@ taskContainer.addEventListener("click", (e) => {
     tasks = tasks.filter((element)=> element.id !== taskId);
 
     saveTasks();
-
 
     renderTasks();
 
