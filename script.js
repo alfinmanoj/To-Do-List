@@ -9,10 +9,16 @@ const dueDate = document.getElementById("dueDate");
 
 const taskContainer = document.getElementById("taskContainer");
 const emptyState = document.querySelector(".empty-state");
+const emptyStateTitle = document.querySelector(".empty-state h3");
+const emptyStateText = document.querySelector(".empty-state p");
+
 
 const totalTask = document.getElementById("totalTasks");
 const completedTask = document.getElementById("completedTasks");
 const pendingTask = document.getElementById("pendingTasks");
+
+
+const searchInput = document.getElementById("searchInput");
 
 
 //states
@@ -20,6 +26,8 @@ const pendingTask = document.getElementById("pendingTasks");
 let tasks = [];
 
 let editingTaskId = null;
+
+let searchTerm = "";
 
 
 // Functions
@@ -30,14 +38,30 @@ function renderTasks() {
 
     taskContainer.innerHTML = "";
 
+    const filteredTasks = tasks.filter((item)=>item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
     if (tasks.length === 0) {
+
         emptyState.style.display = "flex";
-    }else {
+
+        emptyStateTitle.textContent = "No tasks yet.";
+        emptyStateText.textContent = "Start by adding your first task.";
+
+    } else if (filteredTasks.length === 0) {
+
+        emptyState.style.display = "flex";
+
+        emptyStateTitle.textContent = "No matching tasks found.";
+        emptyStateText.textContent = "Try a different search term.";
+
+    } else {
+
         emptyState.style.display = "none";
+
     }
 
-   
-    for (let item of tasks) {
+    
+    for (let item of filteredTasks) {
 
         const taskCard = document.createElement("div");
         taskCard.classList.add("task-card");
@@ -138,6 +162,7 @@ function saveTasks() {
     localStorage.setItem("tasks", jsonStringArr);
 }
 
+
 // load task from local Storage
 
 function loadTasks() {
@@ -150,13 +175,13 @@ function loadTasks() {
 
     renderTasks();
 }
-
+// initial rendering
 loadTasks();
 
 
 // events
 
- // Add Task  form submit
+ // Add Task form submit
 
 taskForm.addEventListener("submit", (e) => {
 
@@ -223,7 +248,6 @@ taskContainer.addEventListener("change", (e)=>{
 });
 
 
-
 //edit task
 
 taskContainer.addEventListener("click", (e) => {
@@ -262,6 +286,18 @@ taskContainer.addEventListener("click", (e) => {
     renderTasks();
 
 });
+
+
+// search task
+
+searchInput.addEventListener("input", (e) => {
+
+    searchTerm = e.target.value.trim();
+
+    renderTasks();
+});
+
+
 
 
 
