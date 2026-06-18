@@ -20,6 +20,8 @@ const pendingTask = document.getElementById("pendingTasks");
 
 const searchInput = document.getElementById("searchInput");
 
+const filterSelect = document.getElementById("filterSelect");
+
 
 //states
 
@@ -28,6 +30,8 @@ let tasks = [];
 let editingTaskId = null;
 
 let searchTerm = "";
+
+let statusFilter = "All Tasks";
 
 
 // Functions
@@ -38,7 +42,23 @@ function renderTasks() {
 
     taskContainer.innerHTML = "";
 
+    let finalFilteredArr;
+
     const filteredTasks = tasks.filter((item)=>item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    if (statusFilter === "All Tasks") {
+        
+        finalFilteredArr = filteredTasks;
+
+    }else if (statusFilter === "Completed") {
+
+        finalFilteredArr = filteredTasks.filter((item)=> item.completed);
+
+    }else {
+
+        finalFilteredArr = filteredTasks.filter((item)=> !item.completed);
+    }
+    
 
     if (tasks.length === 0) {
 
@@ -47,7 +67,7 @@ function renderTasks() {
         emptyStateTitle.textContent = "No tasks yet.";
         emptyStateText.textContent = "Start by adding your first task.";
 
-    } else if (filteredTasks.length === 0) {
+    } else if (finalFilteredArr.length === 0) {
 
         emptyState.style.display = "flex";
 
@@ -61,7 +81,7 @@ function renderTasks() {
     }
 
     
-    for (let item of filteredTasks) {
+    for (let item of finalFilteredArr) {
 
         const taskCard = document.createElement("div");
         taskCard.classList.add("task-card");
@@ -248,6 +268,7 @@ taskContainer.addEventListener("change", (e)=>{
 });
 
 
+
 //edit task
 
 taskContainer.addEventListener("click", (e) => {
@@ -293,6 +314,13 @@ taskContainer.addEventListener("click", (e) => {
 searchInput.addEventListener("input", (e) => {
 
     searchTerm = e.target.value.trim();
+
+    renderTasks();
+});
+
+
+filterSelect.addEventListener("change", (e)=> {
+    statusFilter = e.target.value;
 
     renderTasks();
 });
