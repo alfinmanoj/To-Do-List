@@ -21,6 +21,10 @@
 
     --danger-color:#ff0000;
 
+    --secondary-btn-bg: #e5e7eb;
+    --secondary-btn-hover: #d1d5db;
+    --secondary-btn-text: #374151;
+
     --radius: 12px;
 
     --space-sm: 0.5rem;
@@ -249,6 +253,17 @@ button {
 
 #addTaskBtn:hover {
     opacity: 0.9;
+}
+
+#clearCompletedBtn {
+    background: var(--secondary-btn-bg);
+    color: var(--secondary-btn-text);
+    transition: background 0.2s ease;
+}
+
+#clearCompletedBtn:hover {
+
+    background: var(--secondary-btn-hover);
 }
 
 .edit-btn {

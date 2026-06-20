@@ -22,6 +22,8 @@ const searchInput = document.getElementById("searchInput");
 
 const filterSelect = document.getElementById("filterSelect");
 
+const clearCompletedBtn = document.getElementById("clearCompletedBtn");
+
 
 //states
 
@@ -319,8 +321,20 @@ searchInput.addEventListener("input", (e) => {
 });
 
 
+//  filter select 
+
 filterSelect.addEventListener("change", (e)=> {
     statusFilter = e.target.value;
+
+    renderTasks();
+});
+
+// clear complete task 
+
+clearCompletedBtn.addEventListener("click",()=> {
+    tasks = tasks.filter((item)=> !item.completed);
+
+    saveTasks();
 
     renderTasks();
 });
