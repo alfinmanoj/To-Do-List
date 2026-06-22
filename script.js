@@ -24,6 +24,8 @@ const filterSelect = document.getElementById("filterSelect");
 
 const clearCompletedBtn = document.getElementById("clearCompletedBtn");
 
+const categoryFilter = document.getElementById("categoryFilter");
+
 
 //states
 
@@ -34,6 +36,8 @@ let editingTaskId = null;
 let searchTerm = "";
 
 let statusFilter = "All Tasks";
+
+let filterCategory = "All Categories";
 
 
 // Functions
@@ -60,6 +64,13 @@ function renderTasks() {
 
         finalFilteredArr = filteredTasks.filter((item)=> !item.completed);
     }
+
+
+    if (filterCategory !== "All Categories") {
+
+        finalFilteredArr = finalFilteredArr.filter((item)=> item.category === filterCategory);
+    }
+
     
 
     if (tasks.length === 0) {
@@ -324,7 +335,18 @@ searchInput.addEventListener("input", (e) => {
 //  filter select 
 
 filterSelect.addEventListener("change", (e)=> {
+
     statusFilter = e.target.value;
+
+    renderTasks();
+});
+
+
+// category Filter
+
+categoryFilter.addEventListener("change", (e)=> {
+
+    filterCategory = e.target.value;
 
     renderTasks();
 });
