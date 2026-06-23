@@ -26,6 +26,8 @@ const clearCompletedBtn = document.getElementById("clearCompletedBtn");
 
 const categoryFilter = document.getElementById("categoryFilter");
 
+const priorityFilter = document.getElementById ("priorityFilter");
+
 
 //states
 
@@ -38,6 +40,8 @@ let searchTerm = "";
 let statusFilter = "All Tasks";
 
 let filterCategory = "All Categories";
+
+let filterPriority = "All Priorities";
 
 
 // Functions
@@ -69,6 +73,12 @@ function renderTasks() {
     if (filterCategory !== "All Categories") {
 
         finalFilteredArr = finalFilteredArr.filter((item)=> item.category === filterCategory);
+    }
+
+
+    if (filterPriority !== "All Priorities") {
+
+        finalFilteredArr = finalFilteredArr.filter((item)=> item.priority === filterPriority);
     }
 
     
@@ -350,6 +360,17 @@ categoryFilter.addEventListener("change", (e)=> {
 
     renderTasks();
 });
+
+// priority Filter
+
+priorityFilter.addEventListener("change", (e)=> {
+
+    filterPriority = e.target.value;
+
+    renderTasks();
+});
+
+
 
 // clear complete task 
 
