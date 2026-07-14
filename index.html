@@ -51,6 +51,7 @@
                 </form>
             </section>
 
+            <!-- Stats section -->
             <section class="stats">
                 <!-- Total Tasks -->
                 <div class="stat-card">
@@ -70,7 +71,22 @@
                     <p id="pendingTasks">0</p>
                 </div>
             </section>
+            
+            <!-- Progress bar section -->
+            <section class="progress-section">
+                
+                <div class="progress-header">
+                    <h3>Progress</h3>
+                    <p id="progressPercentage">0%</p>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
 
+            </section>
+
+            <!-- Search / Filters -->
             <section class="task-controls">
                 
                 <input type="text" id="searchInput" placeholder="Search tasks">
@@ -80,7 +96,7 @@
                     <option>Completed</option>
                     <option>Pending</option>
                 </select>
-
+                
 
                 <select id="categoryFilter">
                     <option value="All Categories">All Categories</option>

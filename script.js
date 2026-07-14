@@ -18,6 +18,10 @@ const completedTask = document.getElementById("completedTasks");
 const pendingTask = document.getElementById("pendingTasks");
 
 
+const progressPercentage = document.getElementById("progressPercentage");
+const progressFill = document.querySelector(".progress-fill");
+
+
 const searchInput = document.getElementById("searchInput");
 
 const filterSelect = document.getElementById("filterSelect");
@@ -183,6 +187,7 @@ function renderTasks() {
         
     }
     updateStats();
+    updateProgress();
 }
 
 // Statistics Functions - update states card
@@ -194,6 +199,25 @@ function updateStats() {
     completedTask.textContent = tasks.filter((item)=> item.completed).length;
 
     pendingTask.textContent = tasks.filter((item)=> !item.completed).length;
+}
+
+
+// update progress
+
+function updateProgress() {
+
+    const total = tasks.length;
+    const completed = tasks.filter((item)=> item.completed).length;
+
+    if (total === 0) {
+
+        progressPercentage.textContent = "0%";
+        progressFill.style.width = "0%";
+    }else {
+        const progress = Math.round((completed / total)*100)
+        progressPercentage.textContent = `${progress}%`;
+        progressFill.style.width = `${progress}%`;
+    }
 }
 
 
