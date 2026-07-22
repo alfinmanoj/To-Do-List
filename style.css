@@ -25,6 +25,10 @@
     --secondary-btn-hover: #d1d5db;
     --secondary-btn-text: #374151;
 
+
+    --overdue-bg: #fef2f2;
+    --overdue-border: #ef4444;
+
     --radius: 12px;
 
     --space-sm: 0.5rem;
@@ -243,6 +247,13 @@ form {
 
 .completed-card {
     opacity: 0.6;
+}
+
+/* over-due task */
+
+.overdue-card {
+    background: var(--overdue-bg);
+    border-left: 4px solid var(--overdue-border);
 }
 
 /* input and select */

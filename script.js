@@ -48,6 +48,7 @@ let filterCategory = "All Categories";
 let filterPriority = "All Priorities";
 
 
+
 // Functions
 
 // rendering function - render task card
@@ -85,6 +86,10 @@ function renderTasks() {
         finalFilteredArr = finalFilteredArr.filter((item)=> item.priority === filterPriority);
     }
 
+    // TODAYS DATE FOR OVERDUE FEATURE 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     
 
     if (tasks.length === 0) {
@@ -112,6 +117,20 @@ function renderTasks() {
 
         const taskCard = document.createElement("div");
         taskCard.classList.add("task-card");
+
+        // due date feature
+        if (item.dueDate !== "No due date"){
+            const [year, month, date] = item.dueDate.split("-");
+
+           const monthIndex = month -1;
+
+            const taskDueDate = new Date(year, monthIndex, date);
+
+            if (today > taskDueDate && !item.completed) {
+
+                 taskCard.classList.add("overdue-card");
+            }
+        }
 
 
         const taskInfo = document.createElement("div");
@@ -259,6 +278,7 @@ taskForm.addEventListener("submit", (e) => {
     if (cleanedTitle === "") {
         return
     }
+
 
     if (editingTaskId !== null) {
         const particularTask = tasks.find((element) => element.id === editingTaskId);
